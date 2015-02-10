@@ -1,0 +1,30 @@
+---
+output:   
+  word_document:
+    fig_caption: yes
+csl: biological-conservation.csl
+bibliography: TestBiblio.bib
+---
+
+# 1. Introduction
+
+This is the introduction of the text.
+
+# 2. Methods
+General methods text close to heaader.
+
+## 2.1. Methods subsection 1
+
+Here is some more methods text with a code block.
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
