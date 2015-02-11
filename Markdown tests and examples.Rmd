@@ -1,0 +1,96 @@
+---
+bibliography: TestBiblio.bib
+csl: biological-conservation.csl
+output:
+  word_document:
+    fig_caption: yes
+    reference_docx: DefaultMSstyle.docx
+  pdf_document: default
+  html_document: default
+---
+
+```{r, echo=FALSE, results='hide'}
+library(pander)
+library(knitr)
+
+pasteLabel <- function(preText, inObj, objName, insLink=FALSE){
+  objNum <- inObj[objName]
+  useText <- paste(preText, objNum, sep=" ")
+  if (insLink){
+    useText <- paste("[", useText, "](#", objName, ")", sep="")
+}
+useText
+}
+ 
+# this increments the counter, and gives a name to the number so we can reference it later
+incCount <- function(inObj, useName){
+  nObj <- length(inObj)
+  useNum <- max(inObj) + 1
+  inObj <- c(inObj, useNum)
+  names(inObj)[nObj+1] <- useName
+  inObj
+}
+figCount <- c("_"=0)
+tableCount <- c("_"=0)
+ 
+tableCat <- function(inFrame){
+    outText <- paste(names(inFrame), collapse=" | ")
+    outText <- c(outText, paste(rep("---", ncol(inFrame)), collapse=" | "))
+    invisible(apply(inFrame, 1, function(inRow){
+    outText <<- c(outText, paste(inRow, collapse=" | "))
+    }))
+  return(outText)
+} 
+```
+
+# 1. Introduction
+
+This is the introduction of the text. In fact, this is a random test of some stuff to do with a test bibliography what I just made [@collins_differences_2009]. This is a further test with two references [@martin_understanding_2011; @hooten_guide_2014]. As Herborn et al. [-@herborn_personality_2014] pointed out, tits are pretty cool.
+This is a great big long block of text with a hard return after **this**.
+Some further text, after which I will attempt a page break. Here is a further part-sentence in which I will test the insertion of a different type of reference [@doi=10.1006/gcen.2001.7749]. This is the next sentence.
+
+
+
+# 2. Methods
+General methods text close to heaader.
+
+## 2.1. Methods subsection 1
+
+Here is some more methods text with a code block.
+
+```{r}
+summary(cars)
+```
+
+Here is the same table but run through tableCat():
+
+```{r, results='asis', echo=FALSE}
+cat(tableCat(head(cars,5)), sep='\n')
+```
+
+```{r, results='hide', echo=FALSE}
+mytab <- head(cars,5)
+tableCount <- incCount(tableCount, "mytab")
+```
+And here is the same table (`r I(pasteLabel('Table', tableCount, 'mytab'))`) again, but now with a caption and label:
+```{r, results='asis', echo=FALSE, tab.}
+pandoc.table(mytab, caption=paste(I(pasteLabel('Table', tableCount, 'mytab')), '. This is the actual table caption',sep=''))
+```
+
+Here is a further attempt with the same table but using kable():
+```{r echo=F}
+kable(mytab, caption='test')
+```
+
+
+### 2.1.2. Header level 3
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE, fig.cap='This is a test figure.'}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## References {-}

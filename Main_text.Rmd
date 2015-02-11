@@ -4,27 +4,64 @@ csl: biological-conservation.csl
 output:
   word_document:
     fig_caption: yes
+    reference_docx: DefaultMSstyle.docx
+  pdf_document: default
   html_document: default
 ---
 
+```{r, echo=FALSE, results='hide'}
+library(pander)
+library(knitr)
+
+pasteLabel <- function(preText, inObj, objName, insLink=FALSE){
+  objNum <- inObj[objName]
+  useText <- paste(preText, objNum, sep=" ")
+  if (insLink){
+    useText <- paste("[", useText, "](#", objName, ")", sep="")
+}
+useText
+}
+ 
+# this increments the counter, and gives a name to the number so we can reference it later
+incCount <- function(inObj, useName){
+  nObj <- length(inObj)
+  useNum <- max(inObj) + 1
+  inObj <- c(inObj, useNum)
+  names(inObj)[nObj+1] <- useName
+  inObj
+}
+figCount <- c("_"=0)
+tableCount <- c("_"=0)
+ 
+tableCat <- function(inFrame){
+    outText <- paste(names(inFrame), collapse=" | ")
+    outText <- c(outText, paste(rep("---", ncol(inFrame)), collapse=" | "))
+    invisible(apply(inFrame, 1, function(inRow){
+    outText <<- c(outText, paste(inRow, collapse=" | "))
+    }))
+  return(outText)
+} 
+```
+
+# Limited evidence for cumulative effects of small wind turbines on bat activity on a landscape scale
+*Jeroen Minderman, Mairi Gillis, Helen Daly & Kirsty Park*
+
 # 1. Introduction
-
-This is the introduction of the text. In fact, this is a random test of some stuff to do with a test bibliography what I just made [@collins_differences_2009]. This is a further test with two references [@martin_understanding_2011; @hooten_guide_2014]. As Herborn et al. [-@herborn_personality_2014] pointed out, tits are pretty cool.
-This is a great big long block of text with a hard return after *this*.
-Some further text, after which I will attempt a page break.
-
 
 
 # 2. Methods
-General methods text close to heaader.
 
-## 2.1. Methods subsection 1
+General methods text.
 
-Here is some more methods text with a code block.
+## Bat data
 
-```{r}
-summary(cars)
-```
+Transects; length, orientation. Time of data collection. Details of detectors. 
+
+## Habitat data
+
+Briefly, quantification of all variables. Refer to appendix for details of "initial" habitat data model selection. 
+
+## Statistics
 
 You can also embed plots, for example:
 
