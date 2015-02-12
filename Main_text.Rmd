@@ -10,8 +10,8 @@ output:
 ---
 
 ```{r, echo=FALSE, results='hide'}
-library(pander)
-library(knitr)
+library(pander, quietly=T)
+library(knitr, quietly=T)
 
 pasteLabel <- function(preText, inObj, objName, insLink=FALSE){
   objNum <- inObj[objName]
@@ -48,6 +48,9 @@ tableCat <- function(inFrame){
 
 # 1. Introduction
 
+In this paper we aim to quantify and analyse the potential cumulative effect of SWTs on bat activity on a wider landscape scale (up to 500m from installed turbines). Specifically, using data collected at **X sites** throughout the UK we test the following predictions:
+(1) Bat activity is systematically lower in closer proximity (e.g. 0-100m from SWTs compared to 100-200m, 200-300m, etc) of operating SWTs, controlling for the effects of habitat and environmental conditions.
+(2) The effect of SWT proximity on bat activity as tested in Prediction 1 is stronger in sites with multiple (2-4) SWTs installed compared to single SWT sites. Support for this prediction would indicate evidence of cumulative effects of SWTs.
 
 # 2. Methods
 
