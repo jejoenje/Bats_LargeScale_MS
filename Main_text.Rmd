@@ -44,12 +44,12 @@ tableCat <- function(inFrame){
 ```
 
 # Limited evidence for cumulative effects of small wind turbines on bat activity on a landscape scale
-*Jeroen Minderman^1$^, Mairi Gillis^2^, Helen Daly^3^ & Kirsty Park^1^*    
+*Jeroen Minderman^1$^, Mairi H. Gillis^2^, Helen F. Daly^3^ & Kirsty J. Park^1^*    
 
 
 1. Biological & Environmental Sciences, University of Stirling, Stirling, FK9 4LA, United Kingdom. 
-2. Address 2. 
-3. Address 3. 
+2. 228 Galashiels Road, Stow, Galashiels, Selkirkshire, TD1 2RA, mgillis4a7i@gmail.com
+3. 20/11 Duff Street, Dalry, Edinburgh, Midlothian, EH11 2HG, hfdaly@outlook.com
 - ^$^***Corresponding author***. Current address: School of Biology, University of St Andrews, St Andrews, Fife, KY16 9ST, UK. Email: jm340@st-andrews.ac.uk. 
 
 **Key words**: XXXXX 
