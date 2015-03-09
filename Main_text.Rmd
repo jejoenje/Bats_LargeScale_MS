@@ -1,6 +1,6 @@
 ---
-bibliography: TestBiblio.bib
-csl: biological-conservation.csl
+bibliography: biblio.bib
+csl: journal-of-applied-ecology.csl
 output:
   word_document:
     fig_caption: yes
@@ -80,9 +80,9 @@ General methods text.
 
 ## Sites
 
-Data were collected at **X** SWT sites in central and eastern Scotland. Sites were selected from an existing database of owners **REF** based on how representative they were of common UK SWT installation settings in terms of habitat, turbine models and size. All turbines studied here were free-standing and between **X and X** in hub height, and all were in rural settings but specific habitat in the surrounding area varied (see **XX below**).
+Data were collected at **X** SWT sites in central and eastern Scotland. Sites were selected from an existing database of owners [@minderman_experimental_2012; @park_integrating_2013] based on how representative they were of common UK SWT installation settings in terms of habitat, turbine models and size. All turbines studied here were free-standing and between **X and X** in hub height, and all were in rural settings but specific habitat in the surrounding area varied (see **XX below**).
 
-## Bat data
+## Bat data and transects
 
 Bat activity data was collected between **XXX** and **XXX** 2013 and **XXX** and **XXX** in 2014. The time of data collection varied but started 30 minutes after sunset at the earliest and finished well before sunrise in all cases.  
 
@@ -97,9 +97,9 @@ Briefly, quantification of all variables. Refer to appendix for details of "init
 
 ## Data analysis and statistics
 
-### Measure of bat activity: probability of a pass per hectare surveyed
+### Bat activity: probability of a pass per hectare surveyed
 
-Bat activity was initially quantified as the number of bat 'passes' (**'pass' definition**) per transect section. However, we chose to analyse our data as bat activity presence or absence per transect section, per survey visit, for two reasons. First, the distribution of observed counts was so skewed (many zeros and excessive variation) that count-based statistical models did not provide any reasonable fit. Second, using bat 'passes' as a measure of activity provides only a relative measure of activity in he first place. In addition, because the area covered by each transect section varied slightly (see **Section X** above), we here model the probability of detecting bat activity per section and hectares covered.
+Bat activity was initially quantified as the number of bat 'passes' (**'pass' definition**) per transect section. However, we chose to analyse our data as bat activity presence or absence per transect section, per survey visit, for two reasons. First, the distribution of observed counts was highly skewed (many zeros and excessive variation) so that count-based statistical models did not provide any reasonable fit. Second, using bat 'passes' as a measure of activity  provides a relative measure of activity and analyses of absolute pass count would therefore add little information. In addition, because the area covered by each transect section varied slightly (see **Section X** above), we here model the probability of detecting bat activity per section and hectares covered.
 
 ### Statistical analysis
 
@@ -116,4 +116,6 @@ Full GLMM. Family and link-function, offset. All explanatory variables and units
 * Number of single/multiple sites. 
 * Number of surveys per site; resulting sample size (transect sections visited X times).
 
-## References {-}
+# References {-}
+
+# Appendix 1
