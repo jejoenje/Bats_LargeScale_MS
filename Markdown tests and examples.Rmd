@@ -87,7 +87,7 @@ kable(mytab, caption='test')
 
 You can also embed plots, for example:
 
-```{r, echo=FALSE, fig.cap='This is a test figure.'}
+```{r, echo=FALSE, caption='This is a test figure.'}
 plot(cars)
 ```
 
