@@ -1,18 +1,21 @@
 ---
-bibliography: biblio.bib
+bibliography: LargeScale_MS_biblio.bib
 csl: journal-of-applied-ecology.csl
 output:
-  pdf_document: default
-  html_document: default
   word_document:
     fig_caption: yes
     reference_docx: DefaultMSstyle.docx
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r, echo=FALSE, results='hide'}
 library(pander, quietly=T)
 library(knitr, quietly=T)
 library(Hmisc, quietly=T, warn.conflicts=F)
+library(lme4, quietly=T)
+library(MuMIn, quietly=T, warn.conflicts=F)
+suppressMessages(library(arm))
 
 opts_chunk$set(dpi = 200)
 
@@ -83,7 +86,9 @@ FIG1 <- function() {
 figCount <- incCount(figCount, "model_predictions1")
 
 ### Calculate variables for text:
-lme4_version <- as.vector(unlist(sessionInfo()[[6]]$lme4[2]))
+lme4.v <- as.vector(unlist(sessionInfo()[[6]]$lme4[2]))
+MuMIn.v <- sessionInfo()[[6]]$MuMIn$Version
+arm.v<- as.vector(unlist(sessionInfo()[[6]]$arm[2]))
 
 
 ```
@@ -134,14 +139,14 @@ Bat activity data were collected between **XXX** and **XXX** 2013 and **XXX** an
 Bat activity was measured along transects by 1-2 observers walking the length of each transect at a slow **give approx speed** and constant pace, using EchoMeter EM3+ bat detectors (WildLife Acoustics, Mass., USA). 
 A target of four transects was planned for all sites, running out from the turbines (or the central point between turbines in the case of multiple turbine sites) in four cardinal directions. However, because of physical constraints (e.g. walls, impassible fences or ditches, houses or buildings) the actual number of transects per site as well as their length varied (Number: **X-X, mean X** per site, length: **X-Xm, mean Xm**). All transects were placed so that (1) the combination of all transects within each site covered all major habitats present, and (2) overall distance separating each transect was maximised. Transects were divided into 100m sections running out from the turbine centre point, giving up to five distance bands running away from the turbine.  
 
-One measure of ground level wind speed **anenometer make** was taken at the end of each section (i.e in each distance band) on each survey visit, and minimum daily average temperature measures for each survey visit were obtained from the UK MIDAS weather station data at Grangemouth (**coordinates**) **REF**.
+One measure of ground level wind speed **anenometer make** was taken at the end of each section (i.e in each distance band) on each survey visit, and minimum daily average temperature measures for each survey visit were obtained from the UK MIDAS weather station data at Grangemouth (**coordinates**) [@uk_meteorological_office_midas_2006].
 
 ## Habitat data and variable selection
 
 To account for expected confounding effects of habitat variation on bat activity along the transects, we used two key measures of habitat variability in each transect section: (1) edge density and (2) proportion of woodland. 
 These two variables were selected on the basis of a preliminary analysis of the effect of a full set of **XXX** habitat variables on bat activity. This was done to avoid both overparameterisation of the main statistical models presented here, as well as the inclusion of highly collinear habitat metrics. Full details of this preliminary analysis are given in Appendix **X**.
 To obtain habitat data per transect section, 50m buffers were placed around digital maps of each transect route, resulting in approximately 100m x 100m transect sections. The exact area of each section varied because of non-linear transect sections, but this was accounted for in the analysis, see **below**. 
-All habitat variables were quantified in each transect section using  1:1250 UK Ordnance Survey MasterMap Topography digital maps, using QGIS **version** [@quantum_quantum_2014].
+All habitat variables were quantified in each transect section using  1:1250 UK Ordnance Survey MasterMap Topography digital maps, using QGIS **version** [@quantum_gis_development_team_quantum_2014].
 Mean distance (m) to both buildings and water was calculated by constructing a raster map of distances between each raster cell and the nearest cell with buildings or water map data, and averaging these raster values across each transect section. Edge density (m m^-2^) represented the density of "edge" habitat in each transect cell, and was calculated as the total length of all linear habitat features ("line" data in the OS Topography Layer) divided by the area of the transect section. Thus, this is a description of the density of e.g. building-, woodland and water edges, hedgerows, roads and tracks, roadsides, field boundaries. Finally, the proportion of tree coverage in each transect section was the sum of all tree coverage (m^2^) (coniferous, non-coniferous and unclassified trees) in the OS Topography polygon data divided by the transect section area. All Pearson correlation coefficients between these four habitat measures were <0.2 with the exception of the correlation between edge density and distance to buildings which was 0.37.
 
 ## Data analysis and statistics
@@ -152,19 +157,19 @@ Bat activity was initially quantified as the number of bat 'passes' (**'pass' de
 
 ### Statistical analysis
 
-We used generalised linear mixed effects models (GLMMs) **REF** and an Information-Theoretic model selection (IT) approach **REF B&A** to analyse our data. 
+We used generalised linear mixed effects models (GLMMs) [@gelman_data_2007] and an Information-Theoretic model selection (IT) approach [@burnham_model_1998] to analyse our data. 
 
 #### Model structure
 
 We modelled the probability of a bat pass per unit area on a given survey visit as the response variable with a GLMM with binomial errors and a complementary log-log link function. This link function allowed us to include transect section area as an offset in the model (thus accounting for slight variation in the size of each transect section). To account for the non-independence of repeated measurements from the same site and transect sections, all models included transect nested within site as a random effect. 
 To test our two predictions (see **XX**), we included two focal fixed factors; (1) transect section (distance bands; 0-100m, 100-200m, 200-300m, 300-400m and 400-500m from the SWTs) and (2) turbine number (single or multiple SWTs), as well as the statistical interaction between the two. In addition to these focal factors we included the four selected (see **above**) habitat variables (distance to buildings, distance to water, edge density and proportion of tree cover) as continuous covariates. Moreover, because bat activity is known to vary with weather conditions (particularly temperature and wind speed) across the season and through the night, we also included covariates for the minimum temperature over 24h (C), wind speed (m s^-1^), julian day number, time to midnight (mins) and time to midnight^2^ (to account for potential non-linear effects of the latter). Thus, accounting for any confouding effects of habitat and environmental conditions, a transect section effect would indicate a systematic difference in bat activity as a function of distance from SWTs (Prediction 1), and an interaction between this and turbine number would indicate that the strength of this effect depends on the number of SWTs installed (Prediction 2). To avoid overparameterisation of the model, interactions between confounding effects were not considered.
-All inputs were standardised (centered to 0 and scaled to 2 SD) following Gelman et al. (**REF**) to improve performance of parameter estimation and allow for direct interpretation of relative effect strength.  
+All inputs were standardised (centered to 0 and scaled to 2 SD) following Gelman [-@gelman_scaling_2008] to improve performance of parameter estimation and allow for direct interpretation of relative effect strength.  
 
 #### Model selection, averaging and predictions
 
-A full model set was built starting with the 'full model' including all fixed- and random effects listed above. The model set was constrained to (1) only include the time to midnight^2^ term when its linear term was also included, (2) include all random effects in all models, and (3) use the same link function and distribution for all models. This yielded a full model set of N = **XX** models. Model fit was assessed using the adjusted Akaike Information Criterion (AICc) and we took the top models within 4 AICc points of the 'top' model as our candidate set. To account for model selection uncertainty within the candidate set, parameter estimates and their standard errors were then averaged and we present the averaged parameter estimates calculated using the 'zero' method (**REF B&A**). 
+A full model set was built starting with the 'full model' including all fixed- and random effects listed above. The model set was constrained to (1) only include the time to midnight^2^ term when its linear term was also included, (2) include all random effects in all models, and (3) use the same link function and distribution for all models. This yielded a full model set of N = **XX** models. Model fit was assessed using the adjusted Akaike Information Criterion (AICc) and we took the top models within 4 AICc points of the 'top' model as our candidate set. To account for model selection uncertainty within the candidate set, parameter estimates and their standard errors were then averaged and we present the averaged parameter estimates calculated using the 'zero' method (**REF B&A**). Prediction intervals were calculated as the 95% quantiles (weighted by model weight) of predictions from N = 1000 simulated draws from the estimated parameter distributions for each of the models in the candidate set [@gelman_data_2007].
 
-The GLMMs were fit using package lme4 **REF** v. `r cat(lme4_version)` bla bla...
+We used `r R.Version()$version.string` [@r_development_core_team_r:_2015] for all statistical analyses. GLMMs were fit using package *lme4* v. `r lme4.v` [@bates_lme4:_2014]. Model selection and averaging was performed using package *MuMIn* v. `r MuMIn.v` [@barton_mumin:_2015], and standardisation of model inputs and parameter simulation used package *arm* v. `r arm.v` [@gelman_arm:_2014].
 
 # Results
 
