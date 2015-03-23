@@ -86,9 +86,7 @@ FIG1 <- function() {
 figCount <- incCount(figCount, "model_predictions1")
 
 ### Calculate variables for text:
-lme4.v <- as.vector(unlist(sessionInfo()[[6]]$lme4[2]))
-MuMIn.v <- sessionInfo()[[6]]$MuMIn$Version
-arm.v<- as.vector(unlist(sessionInfo()[[6]]$arm[2]))
+source('Main_text_variables.R')
 
 
 ```
@@ -110,7 +108,7 @@ arm.v<- as.vector(unlist(sessionInfo()[[6]]$arm[2]))
 
 2. Although recent studies showed that bat activity is negatively affected by the immediate proximity of single operating SWTs, the potential for wider landscape-scale effects of multiple SWTs installed in clusters remains unstudied. By contrast, such cumulative effects are commonly considered in impact studies of large wind farms.    
 
-3. We measured variation in bat actvity at a sample of **X** SWT sites in the UK, in order to test whether (1) accounting for variation in habitat, bat activity is generally lower in closer proximity of installed SWTs (e.g. 0-100m, compared to 100-200m, 200-300m, etc.), and (2) whether this effect is stronger in sites with multiple SWTs compared to sites with single turbines.    
+3. We measured variation in bat actvity at a sample of `r n_sites` SWT sites in the UK, in order to test whether (1) accounting for variation in habitat, bat activity is generally lower in closer proximity of installed SWTs (e.g. 0-100m, compared to 100-200m, 200-300m, etc.), and (2) whether this effect is stronger in sites with multiple SWTs compared to sites with single turbines.    
 
 4. After accounting for the effects of confounding variables (e.g. habitat and weather) we here provide evidence that bat activity is lower in close proximity (within 100m compared to 100-500m) from multiple, but not single SWTs. However, the strength of this effect is relatively weak, with the predicted probability of a bat pass **X-X**% within 100m compared to **X**% at 100-200m. **compare strength of effect with e.g. effect of habitat?**    
 
@@ -118,7 +116,7 @@ arm.v<- as.vector(unlist(sessionInfo()[[6]]$arm[2]))
 
 # Introduction
 
-In this paper we aim to quantify and analyse the potential cumulative effect of SWTs on bat activity on a wider landscape scale (up to 500m from installed turbines). Specifically, using data collected at **X sites** throughout the UK we test the following predictions:
+In this paper we aim to quantify and analyse the potential cumulative effect of SWTs on bat activity on a wider landscape scale (up to 500m from installed turbines). Specifically, using data collected at `r n_sites` throughout the UK we test the following predictions:
 
 1. Bat activity is systematically lower in closer proximity (e.g. 0-100m from SWTs compared to 100-200m, 200-300m, etc) of operating SWTs, controlling for the effects of habitat and environmental conditions.    
 
@@ -130,11 +128,11 @@ General methods text.
 
 ## Sites
 
-Data were collected at **X** SWT sites in central and eastern Scotland. Sites were selected from an existing database of owners [@minderman_experimental_2012; @park_integrating_2013] based on how representative they were of common UK SWT installation settings in terms of habitat, turbine models and size. All turbines studied here were free-standing and between **X and X** in hub height, and all were in rural settings but specific habitat in the surrounding area varied (see **XX below**). The number of SWTs installed in each site varied between **minturb** and **maxturb** (mean **meanturb**). SWTs installed in individual sites were the same size and specification with the exception of one site. More than two SWTs were installed in only **XX** sites in our sample. We therefore limited the analyses presented here to a comparison of single and multiple turbine sites.
+Data were collected at `r n_sites` SWT sites in central and eastern Scotland. Sites were selected from an existing database of owners [@minderman_experimental_2012; @park_integrating_2013] based on how representative they were of common UK SWT installation settings in terms of habitat, turbine models and size. All turbines studied here were free-standing and between 6 and 25m (mean 16m) in hub height, and all were in rural settings but specific habitat in the surrounding area varied (see **XX below**). The number of SWTs installed in each site varied between `r n_turb_min` and `r n_turb_max` (median `r n_turb_mn`). SWTs installed in individual sites were the same size and specification with the exception of one site. More than two SWTs were installed in only **XX** sites in our sample. We therefore limited the analyses presented here to a comparison of single and multiple turbine sites.
 
 ## Bat data and transects
 
-Bat activity data were collected between **XXX** and **XXX** 2013 and **XXX** and **XXX** in 2014. The time of data collection varied but started 30 minutes after sunset at the earliest and finished well before sunrise in all cases.  
+Bat activity data were collected between `r date_min_13` and `r date_max_13` and `r date_min_14` and `r date_max_14`. The time of data collection varied but started 30 minutes after sunset at the earliest and finished well before sunrise in all cases.  
 
 Bat activity was measured along transects by 1-2 observers walking the length of each transect at a slow **give approx speed** and constant pace, using EchoMeter EM3+ bat detectors (WildLife Acoustics, Mass., USA). 
 A target of four transects was planned for all sites, running out from the turbines (or the central point between turbines in the case of multiple turbine sites) in four cardinal directions. However, because of physical constraints (e.g. walls, impassible fences or ditches, houses or buildings) the actual number of transects per site as well as their length varied (Number: **X-X, mean X** per site, length: **X-Xm, mean Xm**). All transects were placed so that (1) the combination of all transects within each site covered all major habitats present, and (2) overall distance separating each transect was maximised. Transects were divided into 100m sections running out from the turbine centre point, giving up to five distance bands running away from the turbine.  
@@ -153,7 +151,7 @@ Mean distance (m) to both buildings and water was calculated by constructing a r
 
 ### Bat activity: probability of a pass per hectare surveyed
 
-Bat activity was initially quantified as the number of bat 'passes' (**'pass' definition**) per transect section. However, we chose to analyse our data as bat activity presence or absence per transect section, per survey visit, for two reasons. First, the distribution of observed counts was highly skewed (many zeros and excessive variation) so that count-based statistical models did not provide any reasonable fit. Second, using bat 'passes' as a measure of activity  provides a relative measure of activity and analyses of absolute pass count would therefore add little information. In addition, because the area covered by each transect section varied slightly (see **Section X** above), we here model the probability of detecting bat activity per section and hectares covered.
+Bat activity was initially quantified as the number of bat 'passes' (defined as a sequence of at least two echolocation calls separated by less than a second **REF**?) per transect section. However, we chose to analyse our data as bat activity presence or absence per transect section, per survey visit, for two reasons. First, the distribution of observed counts was highly skewed (many zeros and excessive variation) so that count-based statistical models did not provide any reasonable fit. Second, using bat 'passes' as a measure of activity  provides a relative measure of activity and analyses of absolute pass count would therefore add little information. In addition, because the area covered by each transect section varied slightly (see **Section X** above), we here model the probability of detecting bat activity per section and hectares covered.
 
 ### Statistical analysis
 
@@ -167,11 +165,18 @@ All inputs were standardised (centered to 0 and scaled to 2 SD) following Gelman
 
 #### Model selection, averaging and predictions
 
-A full model set was built starting with the 'full model' including all fixed- and random effects listed above. The model set was constrained to (1) only include the time to midnight^2^ term when its linear term was also included, (2) include all random effects in all models, and (3) use the same link function and distribution for all models. This yielded a full model set of N = **XX** models. Model fit was assessed using the adjusted Akaike Information Criterion (AICc) and we took the top models within 4 AICc points of the 'top' model as our candidate set. To account for model selection uncertainty within the candidate set, parameter estimates and their standard errors were then averaged and we present the averaged parameter estimates calculated using the 'zero' method (**REF B&A**). Prediction intervals were calculated as the 95% quantiles (weighted by model weight) of predictions from N = 1000 simulated draws from the estimated parameter distributions for each of the models in the candidate set [@gelman_data_2007].
+A full model set was built starting with the 'full model' including all fixed- and random effects listed above. The model set was constrained to (1) only include the time to midnight^2^ term when its linear term was also included, (2) include all random effects in all models, and (3) use the same link function and distribution for all models. This yielded a full model set of N = **XX** models. Model fit was assessed using the adjusted Akaike Information Criterion (AICc) and we took the top models within 4 AICc points of the 'top' model as our candidate set. To account for model selection uncertainty within the candidate set, we present the averaged parameter estimates and their standard errors calculated using the 'zero method' [@burnham_model_1998]. Prediction intervals were calculated as the 95% quantiles (weighted by model weight) of predictions from N = 1000 simulated draws from the estimated parameter distributions for each of the models in the candidate set [@gelman_data_2007]. For each model in the candidate set we also present the marginal and conditional R^2^ [@nakagawa_general_2013].
 
 We used `r R.Version()$version.string` [@r_development_core_team_r:_2015] for all statistical analyses. GLMMs were fit using package *lme4* v. `r lme4.v` [@bates_lme4:_2014]. Model selection and averaging was performed using package *MuMIn* v. `r MuMIn.v` [@barton_mumin:_2015], and standardisation of model inputs and parameter simulation used package *arm* v. `r arm.v` [@gelman_arm:_2014].
 
 # Results
+
+Over the two years of the study, we collected bat activity data in N = `r n_total` transect sections, during `r n_surveys` survey visits. Most sites (N = `r n_surveys_p_site_min2`) were surveyed on at least two occassions (2-6 surveys), but four sites were only visted once. Within this sample, N = `r n_turb_single` were single-turbine sites, and N = `r n_turb_multiple` were multiple-turbine sites (2-4 turbines). In total, we recorded N = `r n_pass` bat passes, of which `r round(n_pass_pip_prop,1)`% (N = `r n_pass_pip`) were Pipistrelle bats. Thus, here we only present analyses of Pipistrelle bat activity.
+
+```{r, results='asis', echo=FALSE, tab.}
+mytab <- TAB_main_model_inputs_summary
+pandoc.table(mytab, caption=paste(I(pasteLabel('Table', tableCount, 'mytab')), '. This is the actual table caption',sep=''))
+```
 
 * Number of single/multiple sites. 
 * Number of surveys per site; resulting sample size (transect sections visited X times).
@@ -179,7 +184,10 @@ We used `r R.Version()$version.string` [@r_development_core_team_r:_2015] for al
 ```{r, echo=FALSE, fig.cap=paste(I(pasteLabel('Figure', figCount, 'model_predictions1')), '. Model predictions bla bla',sep=''), fig.width=8, fig.height=6}
 FIG1()
 ```
-
+Here is a further attempt with the same table but using kable():
+```{r echo=F}
+kable(mytab, caption='test')
+```
 
 # Discussion
 
