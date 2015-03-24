@@ -1,5 +1,6 @@
 ### Calculate variables for text:
 
+source('helpjm.r')
 lme4.v <- as.vector(unlist(sessionInfo()[[6]]$lme4[2]))
 MuMIn.v <- sessionInfo()[[6]]$MuMIn$Version
 arm.v<- as.vector(unlist(sessionInfo()[[6]]$arm[2]))
@@ -25,3 +26,6 @@ n_surveys_p_site_min2 <- sum(tapply(bats_nona$SURVEYID, bats_nona$SITE, function
 n_surveys_p_site_1 <- sum(tapply(bats_nona$SURVEYID, bats_nona$SITE, function(x) length(unique(x)))<2)
 n_turb_single <- table(tapply(bats_nona$TURB, bats_nona$SITE, unique))[[1]]
 n_turb_multiple <- table(tapply(bats_nona$TURB, bats_nona$SITE, unique))[[2]]
+n_obs_with_pip <- sum(bats_nona$OCC_PIPS)
+prop_obs_with_pip <- round(sum(bats_nona$OCC_PIPS)/nrow(bats_nona),2)
+n_mods_full_set <- nrow(as.data.frame(m2z_set1))
