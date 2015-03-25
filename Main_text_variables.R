@@ -29,3 +29,7 @@ n_turb_multiple <- table(tapply(bats_nona$TURB, bats_nona$SITE, unique))[[2]]
 n_obs_with_pip <- sum(bats_nona$OCC_PIPS)
 prop_obs_with_pip <- round(sum(bats_nona$OCC_PIPS)/nrow(bats_nona),2)
 n_mods_full_set <- nrow(as.data.frame(m2z_set1))
+min_trscts <- min(ddply(bats_nona, .(SITE), summarise, trscts=length(levels(factor(as.vector(TRSCT)))))$trscts)
+max_trscts <- max(ddply(bats_nona, .(SITE), summarise, trscts=length(levels(factor(as.vector(TRSCT)))))$trscts)
+mean_trscts <- mean(ddply(bats_nona, .(SITE), summarise, trscts=length(levels(factor(as.vector(TRSCT)))))$trscts)
+site_more_2_turb <- sum(tapply(bats_nona$NOTURB, bats_nona$SITE, mean)>2)
