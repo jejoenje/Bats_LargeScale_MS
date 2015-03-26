@@ -33,3 +33,9 @@ min_trscts <- min(ddply(bats_nona, .(SITE), summarise, trscts=length(levels(fact
 max_trscts <- max(ddply(bats_nona, .(SITE), summarise, trscts=length(levels(factor(as.vector(TRSCT)))))$trscts)
 mean_trscts <- mean(ddply(bats_nona, .(SITE), summarise, trscts=length(levels(factor(as.vector(TRSCT)))))$trscts)
 site_more_2_turb <- sum(tapply(bats_nona$NOTURB, bats_nona$SITE, mean)>2)
+
+dist_betw_turb <- data.frame(
+  SITE=c('Arnbog Meigle','Baldinnies','Bogbank','Castlemains','Cockielaw','East Fenton','Huxton','Mid Cambushinnie','Nisbet Hill','Park Cottage',
+         'Townhead Gifford','Turflundie','Wester Essendy','Whitehills'),
+  DIST=c(58,50,mean(23,23),mean(47,43),30,38,57,122,mean(49,50,49),13,43,35,mean(36,41),90)
+  )
