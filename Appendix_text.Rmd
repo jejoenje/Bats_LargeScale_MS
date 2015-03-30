@@ -1,0 +1,79 @@
+---
+output:
+  word_document:
+    fig_caption: yes
+    reference_docx: DefaultMSstyle.docx
+  pdf_document: default
+  html_document: default
+---
+
+```{r, echo=FALSE, results='hide'}
+
+pasteLabel <- function(preText, inObj, objName, insLink=FALSE){
+  objNum <- inObj[objName]
+  useText <- paste(preText, objNum, sep=" ")
+  if (insLink){
+    useText <- paste("[", useText, "](#", objName, ")", sep="")
+}
+useText
+}
+ 
+# this increments the counter, and gives a name to the number so we can reference it later
+incCount <- function(inObj, useName){
+  nObj <- length(inObj)
+  useNum <- max(inObj) + 1
+  inObj <- c(inObj, useNum)
+  names(inObj)[nObj+1] <- useName
+  inObj
+}
+figCount <- c("_"=0)
+tableCount <- c("_"=0)
+ 
+tableCat <- function(inFrame){
+    outText <- paste(names(inFrame), collapse=" | ")
+    outText <- c(outText, paste(rep("---", ncol(inFrame)), collapse=" | "))
+    invisible(apply(inFrame, 1, function(inRow){
+    outText <<- c(outText, paste(inRow, collapse=" | "))
+    }))
+  return(outText)
+} 
+
+### Initialisation code here
+suppressMessages(library(lme4))
+load('DataResults/mod_habz1.Rdata')
+load('DataResults/modset_habz1.Rdata')
+load('DataResults/TAB_all_hab.Rdata')
+n_hab_var <- length(names(fixef(mod_habz1))[-1])
+n_hab_models <- nrow(data.frame(modset_habz1))
+n_cand_hab_models <- nrow(subset(modset_habz1, delta<4))
+
+TAB_all_hab_mod_subset <- round(as.data.frame(subset(modset_habz1, delta<4)),3)
+save(TAB_all_hab_mod_subset,file='TAB_all_hab_mod_subset.Rdata')
+
+### Table index:
+tableCount <- incCount(tableCount, "TAB_all_hab")
+  write.csv(TAB_all_hab, "Table S1.csv")
+tableCount <- incCount(tableCount, "TAB_all_hab_mod_subset")
+  write.csv(TAB_all_hab_mod_subset, "Table S2.csv")
+        
+          
+```
+
+# Supplementary material: No evidence for cumulative effects of small wind turbines on bat activity
+*Jeroen Minderman, Mairi H. Gillis, Helen F. Daly & Kirsty J. Park*
+
+## Appendix 1: Preliminary habitat data analysis
+
+A total of `r n_hab_var` habitat variables were quantified in each transect section in all sites `r pasteLabel('Table S', tableCount, 'TAB_all_hab')` , using 1:1250 UK Ordnance Survey MasterMap Topography digital map (OS) data and QGIS v. 1.8. These variables were chosen on the basis of their known potential effect on bat activity. 
+The five proportion land cover variables (proportion buildings, road or tracks, rough grassland, roadside, and woodland) were calculated from the OS polygon area data and were calculated as the sum of each of these five land cover types in each transect section, divided by the size of the transect section. These were defined as the total area size of all polygons listed as (1) "Buildings" in the *Theme* field; (2) "Road Tracks and Paths"" in the *Theme* field; (3) "Rough grassland" (including all lower classifications) in the *descrTerm* field; (4) "Roadside" in the *descrGroup* field and (5) "Coniferous or Nonconiferous trees"" in the *descrGroup* field.
+The four distance variables (distance to buildings, linear features, trees and water) were calculated by overlaying the OS data with a 1x1m 'raster' of grid cells, calculating the distance (m) between each raster cell and the nearest raster cell containing each of the four land cover types (respectively, buildings as defined above, any linear feature as contained in the OS "line" data, any woodland as defined above and any water polygon), and averaging these distances for all cells within the transect sections.  
+Finally, edge density (m m^-2^) was expressed as the total length of all line features contained in the OS Linear data per transect section, divided by the transect section area.
+
+To identify a subset of habitat variables that were most descriptive of bat activity (see main text), we ran an initial model selection **REF** procedure on a Generalised Linear Mixed Effects (GLMM) **REF** model for the probability of a bat pass per hectare as a function of all `r n_hab_var` habitat variables, transect within site as a random effect, a binomial error distribution with a log-log link function and transect section size (ha) as an offset. This model structure was identical to the model presented in the main text. To avoid problems with colinearity, we limited the full model set to include only models with one of the five 'proportion' habitat variables (because these represent proportion cover, lower cover of one automatically implies greater cover of another, leading to high colinearity). We further exlcuded all models including (1) both proportion of woodland and distance to trees, (2) both proportion buildings and distance to buildings, as well as models including edge density and either (3) distance to linear features or (4) proportion of roads or tracks. Again, these latter exclusions were to avoid high colinearity: a greater proportion of woodland in a given transect section naturally implies shorter distances to trees, edge density is comprised of linear features including roads and tracks, etc. Thus, these variables effectively measured very similar things but in slightly different ways. Although this model selection procedure was done exactly to identify which of these competing variables best describe variation in bat activity, they should not be included in the same models being compared. All model fitting procedures and analyses followed the methodology described in the main text.
+
+The resulting full model set comprised of a total of `r n_hab_models` models `r pasteLabel('Table S', tableCount, 'TAB_all_hab_mod_subset')`. The candidate set ($\Delta$AICc<4) contained `r n_cand_hab_models` models. The 'top' model retained three of the ten habitat variables: distance to water, edge density and the proportion of woodland. Distance to water was only included in two out of the four models in the top set, however. By contrast, edge density and the proportion of woodland were retained in all four models in the candidate set. Thus, we chose to use edge density and the proportion of woodland as the key two habitat variables explaining bat activity.
+
+
+
+
+
