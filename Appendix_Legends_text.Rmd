@@ -1,0 +1,71 @@
+---
+output:
+  word_document:
+    fig_caption: yes
+    reference_docx: DefaultMSstyle.docx
+  pdf_document: default
+  html_document: default
+---
+
+```{r, echo=FALSE, results='hide'}
+
+pasteLabel <- function(preText, inObj, objName, insLink=FALSE){
+  objNum <- inObj[objName]
+  useText <- paste(preText, objNum, sep=" ")
+  if (insLink){
+    useText <- paste("[", useText, "](#", objName, ")", sep="")
+}
+useText
+}
+ 
+# this increments the counter, and gives a name to the number so we can reference it later
+incCount <- function(inObj, useName){
+  nObj <- length(inObj)
+  useNum <- max(inObj) + 1
+  inObj <- c(inObj, useNum)
+  names(inObj)[nObj+1] <- useName
+  inObj
+}
+figCount <- c("_"=0)
+tableCount <- c("_"=0)
+ 
+tableCat <- function(inFrame){
+    outText <- paste(names(inFrame), collapse=" | ")
+    outText <- c(outText, paste(rep("---", ncol(inFrame)), collapse=" | "))
+    invisible(apply(inFrame, 1, function(inRow){
+    outText <<- c(outText, paste(inRow, collapse=" | "))
+    }))
+  return(outText)
+} 
+
+### Initialisation code here
+suppressMessages(library(lme4))
+load('DataResults/mod_habz1.Rdata')
+load('DataResults/modset_habz1.Rdata')
+load('DataResults/TAB_all_hab.Rdata')
+n_hab_var <- length(names(fixef(mod_habz1))[-1])
+n_hab_models <- nrow(data.frame(modset_habz1))
+n_cand_hab_models <- nrow(subset(modset_habz1, delta<4))
+
+TAB_all_hab_mod_subset <- round(as.data.frame(subset(modset_habz1, delta<4)),3)
+save(TAB_all_hab_mod_subset,file='TAB_all_hab_mod_subset.Rdata')
+
+### Table index:
+tableCount <- incCount(tableCount, "TAB_all_hab")             # Table S1
+  write.csv(TAB_all_hab, "Table S1.csv")
+tableCount <- incCount(tableCount, "TAB_all_hab_mod_subset")  # Table S2
+  write.csv(TAB_all_hab_mod_subset, "Table S2.csv")
+        
+          
+```
+
+
+**`r pasteLabel('Table S', tableCount, names(tableCount[tableCount==1]))`**. Descriptive statistics of all ten original habitat variables as predictors for bat activity on their original (unstandardised) scale.    
+  
+  
+**`r pasteLabel('Table S', tableCount, names(tableCount[tableCount==2]))`**. Candidate set of Generalised Linear Mixed Models for bat activity (probability of bat activity ha^-1^, binomial errors, complementary log-log link) within 4 AICc points of the “top” model, as a function of ten candidate habitat predictors only. Coefficients are parameter estimates based on models fit using standardised (centered and scaled to 2 SD) inputs. K is the number of parameters in the models.  All models included site and transect within site as a nested random effect structure.  
+ 
+ 
+
+
+

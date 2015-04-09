@@ -19,6 +19,13 @@ date_max_14 <- format(date_max_14, '%d %B %Y')
 n_pass <- sum(bats_nona$PASSES)
 n_pass_pip <- sum(bats_nona$ALL_PIPS)
 n_pass_pip_prop <- (n_pass_pip/n_pass)*100
+n_pass_compip <- sum(bats_nona$COMPIP)
+n_pass_compip_prop <- (n_pass_compip/n_pass)*100
+n_pass_soppip <- sum(bats_nona$SOPPIP)
+n_pass_soppip_prop <- (n_pass_soppip/n_pass)*100
+n_pass_unkpip <- sum(bats_nona$PIP)
+n_pass_unkpip_prop <- (n_pass_unkpip/n_pass)*100
+  
 n_total <- nrow(bats_nona)
 n_surveys <- nlevels(bats_nona$SURVEYID)
 n_sections <- nlevels(bats_nona$id)

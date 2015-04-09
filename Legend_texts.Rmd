@@ -1,0 +1,118 @@
+---
+bibliography: LargeScale_MS_biblio.bib
+csl: journal-of-applied-ecology.csl
+output:
+  word_document:
+    fig_caption: yes
+    reference_docx: DefaultMSstyle.docx
+  pdf_document: default
+  html_document: default
+---
+
+```{r, echo=FALSE, results='hide'}
+library(pander, quietly=T)
+library(knitr, quietly=T)
+library(Hmisc, quietly=T, warn.conflicts=F)
+library(lme4, quietly=T)
+library(MuMIn, quietly=T, warn.conflicts=F)
+suppressMessages(library(arm))
+suppressMessages(library(plyr, quietly=T, warn.conflicts=F))
+
+opts_chunk$set(dpi = 200)
+
+pasteLabel <- function(preText, inObj, objName, insLink=FALSE){
+  objNum <- inObj[objName]
+  useText <- paste(preText, objNum, sep=" ")
+  if (insLink){
+    useText <- paste("[", useText, "](#", objName, ")", sep="")
+}
+useText
+}
+ 
+# this increments the counter, and gives a name to the number so we can reference it later
+incCount <- function(inObj, useName){
+  nObj <- length(inObj)
+  useNum <- max(inObj) + 1
+  inObj <- c(inObj, useNum)
+  names(inObj)[nObj+1] <- useName
+  inObj
+}
+figCount <- c("_"=0)
+tableCount <- c("_"=0)
+ 
+tableCat <- function(inFrame){
+    outText <- paste(names(inFrame), collapse=" | ")
+    outText <- c(outText, paste(rep("---", ncol(inFrame)), collapse=" | "))
+    invisible(apply(inFrame, 1, function(inRow){
+    outText <<- c(outText, paste(inRow, collapse=" | "))
+    }))
+  return(outText)
+} 
+
+### Load data
+
+load('DataResults/bats_nona.Rdata')
+load('DataResults/mod_habz1.Rdata')
+load('DataResults/TAB_all_hab.Rdata')
+load('DataResults/m2.Rdata')
+load('DataResults/m2_null.Rdata')
+load('DataResults/m2z_set1.Rdata')
+load('DataResults/TAB_mainmod_subset.Rdata')
+load('DataResults/m2z_av.Rdata')
+load('DataResults/m2z_set1_mods.Rdata')
+load('DataResults/TAB_main_model_intputs_summary.Rdata')
+load('DataResults/TAB_coefs_av.Rdata')
+load('DataResults/TAB_imp.Rdata')
+load('DataResults/FIG_predictions1.Rdata')
+obsdat <- subset(bats_nona, select=c('OCC_PIPS','fSECTION','TURB'))
+wtd_mn_single <- apply(mn_single, 2, function(x) wtd.mean(x, weights=subset(m2z_set1,delta<4)$weight))
+wtd_lo_single <- apply(lo_single, 2, function(x) wtd.mean(x, weights=subset(m2z_set1,delta<4)$weight))
+wtd_hi_single <- apply(hi_single, 2, function(x) wtd.mean(x, weights=subset(m2z_set1,delta<4)$weight))
+wtd_mn_multiple <- apply(mn_multiple, 2, function(x) wtd.mean(x, weights=subset(m2z_set1,delta<4)$weight))
+wtd_lo_multiple <- apply(lo_multiple, 2, function(x) wtd.mean(x, weights=subset(m2z_set1,delta<4)$weight))
+wtd_hi_multiple <- apply(hi_multiple, 2, function(x) wtd.mean(x, weights=subset(m2z_set1,delta<4)$weight))
+
+### Table index:
+tableCount <- incCount(tableCount, "TAB_main_model_inputs_summary")   # Table 1
+  write.csv(TAB_main_model_inputs_summary, 'Table 1.csv')
+tableCount <- incCount(tableCount, "TAB_mainmod_subset")              # Table 2
+  write.csv(TAB_mainmod_subset, 'Table 2.csv', row.names=F)
+tableCount <- incCount(tableCount, "TAB_coefs_av")                    # Table 3
+  write.csv(TAB_coefs_av, 'Table 3.csv')
+
+### Figure code:
+figCount <- incCount(figCount, "transect diagram")
+tiff('FIG2.tiff',width=800,height=600,compression='none')
+FIG2 <- function() {
+  bars <- barplot(tapply(obsdat$OCC_PIPS, list(obsdat$TURB, obsdat$fSECTION), mean),beside=T,ylim=c(0,0.5), 
+                  col=c('white','grey'), xaxt='n', xlab='Distance band', ylab='Probability of a Pipistrelle bat pass / ha')
+  axis(1, at=apply(bars,2,mean), labels=c('0-100m','100-200m','200-300m','300-400m','400-500m'))
+  for(i in 1:length(bars[1,])) {
+      arrows(bars[1,][i], wtd_lo_single[i] ,bars[1,][i], wtd_hi_single[i], angle=90, code=3, length=0.1)
+      arrows(bars[2,][i], wtd_lo_multiple[i],bars[2,][i], wtd_hi_multiple[i], angle=90, code=3, length=0.1)    
+  }
+  points(bars[1,], wtd_mn_single, cex=1.5, pch=21, col='black', bg='lightgrey')
+  points(bars[2,], wtd_mn_multiple, cex=1.5, pch=21, col='black', bg='black')
+}; FIG2(); dev.off()
+figCount <- incCount(figCount, "model_predictions1")
+
+```
+
+
+**`r pasteLabel('Table', tableCount, names(tableCount[tableCount==1]))`**. Descriptive statistics of predictor variables in the Generalised Linear Mixed Model (GLMM) for bat activity (Table 2), on their original (unstandardised) scale.  
+ 
+ 
+**`r pasteLabel('Table', tableCount, names(tableCount[tableCount==2]))`**. Candidate set of Generalised Linear Mixed Models for bat activity (probability of bat activity ha-1, binomial errors, complementary log-log link) within 4 AICc points of the “top” model. Coefficients are parameter estimates based on models fit using standardised (centred and scaled to 2 SD) inputs. In the case of factorial predictors, their inclusion is indicated by a +. Empty cells indicate the predictor was not included in a given model. K is the number of parameters in the models.  All models included site and transect within site as a nested random effect structure.  
+ 
+ 
+**`r pasteLabel('Table', tableCount, names(tableCount[tableCount==3]))`**. Model-averaged (using the zero-method, Burnham & Anderson 1998) parameter estimates (b) and their standard errors based on the candidate set of Generalised Linear Mixed Effects Models (GLMMs) for bat activity (probability of a bat pass ha-1) shown in Table 2. Coefficients are parameter estimates based on model fits using standardised (centred and scaled to 2 SD) inputs. The reference categories for distance band is the first band (0-100m from turbines) and the standardised inputs for no. of turbines (two-way factor; therefore only centred – see main text and Gelman (2008)) were -0.538 and 0.462 for single and multiple turbines respectively. All models included site and transect within site as a nested random effect structure, and all models had binomial errors and were fitted with a complimentary log-log link.  
+ 
+ 
+**`r pasteLabel('Figure', figCount, names(figCount[tableCount==1]))`**. Example of a bat transect layout.  
+ 
+ 
+**`r pasteLabel('Figure', figCount, names(figCount[tableCount==2]))`**. Observed (bars) and predicted (points and lines) bat activity (probability of a bat pass ha-1) based on Generalised Linear Mixed Effects Models (GLMMs, Tables 2 and 3), in each of five distance bands around small wind turbines. White bars and grey circles are for single-turbine sites, and grey bars and black circles are for multiple-turbine sites. The error bars (lines) represent the predictive uncertainty, calculated as the 95% quantiles of predicted distributions based on N = 1000 samples from the estimated parameter distributions (Gelman & Hill 2007).
+
+
+ 
+
