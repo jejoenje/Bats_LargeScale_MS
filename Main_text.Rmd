@@ -111,9 +111,18 @@ source('Main_text_variables.R')
 3. 20/11 Duff Street, Dalry, Edinburgh, Midlothian, EH11 2HG, hfdaly@outlook.com 
  
 ^$^***Corresponding author***. Current address: School of Biology, University of St Andrews, St Andrews, Fife, KY16 9ST, UK. Email: jm340@st-andrews.ac.uk.  
-   
-**Key words**: microturbines, domestic turbines, renewables, renewable energy, conservation, planning, wildlife impact
-   
+
+**Running title**: Cumulative effects of small wind turbines on bats
+
+**Word counts**
+*Summary*:
+*Main text*:
+*Acknowledgements*:
+*References*:
+*Table & Figure legends*:
+*No. of tables and figures*:
+*No. of references*:
+
 # Summary
 
 1. While the effects of large wind farms on wildlife (particularly birds and bats) are generally well-studied, similar effects of small wind turbines (SWTs, in the UK usually up to 25m in hub height) remain relatively unknown. This is problematic, because rapid development and increasing accessibility of SWT technology have led to rapid growth of the number of SWTs installed worldwide.    
@@ -122,9 +131,12 @@ source('Main_text_variables.R')
 
 3. We measured variation in bat activity at a sample of `r n_sites` SWT sites in the UK (free-standing SWTs between 6 and 25m in hub height), in order to test whether (1) accounting for variation in habitat, bat activity is generally lower in closer proximity of installed SWTs (e.g. 0-100m, compared to 100-200m, 200-300m, etc.), and (2) whether this effect is stronger in sites with multiple SWTs compared to sites with single turbines.    
 
-4. We focused our analysis on *Pipistrellus* bats (*Pipistrellus pipistrellus* and *P. pygmaeus*) because more than 98% of our recorded activity was from this genus. We show that although observed *Pipistrellus* activity was up to 10% lower within 100m of multiple turbine sites compared to activity at 100-200m, after accounting for confounding effects of habitat and environmental conditions, there is no effect of turbine proximity, irrespective of the number of turbines installed. 
+4. We focused our analysis on *Pipistrellus* bats (*Pipistrellus pipistrellus* Schreber and *P. pygmaeus* Leach) because more than 98% of our recorded activity was from this genus. We show that although observed *Pipistrellus* activity was up to 10% lower within 100m of multiple turbine sites compared to activity at 100-200m, after accounting for confounding effects of habitat and environmental conditions, there is no effect of turbine proximity, irrespective of the number of turbines installed. 
 
-5. We conclude that within our sample there is no evidence of cumulative effects of SWTs on the activity of *Pipistrellus* bats on a landscape scale (i.e. over >100m distances). Our previous studies did show that single SWTs may adversely affect bat activity on smaller spatial scales (within 25m), so the combination of these findings suggest that any adverse effects of SWTs may be relatively localised, even if more than one SWT is present. It should be noted that this study focused on small wind turbines only, and that these findings should not be directly extrapolated to larger wind turbines.
+5. *Synthesis and applications*. In our sample there is no evidence of cumulative effects of SWTs on the activity of *Pipistrellus* bats on a landscape scale (i.e. over >100m distances). Our previous studies did show that single SWTs may adversely affect bat activity on smaller spatial scales (within 25m), so the combination of these findings suggest that any adverse effects of SWTs may be relatively localised, even if more than one SWT is present. These findings are of vital importance to planners and decisions makers seeking to maximise renewable energy generation whilst minimising the risk of adverse effects on bats.
+
+**Key words**: microturbines, domestic turbines, renewables, renewable energy, conservation, planning, wildlife impact
+  
 
 # Introduction
 
@@ -140,7 +152,7 @@ Here, we aim to address this knowledge gap by quantifying and analysing the pote
 
 2. The effect of SWT proximity on bat activity as tested in Prediction 1 is stronger in sites with multiple (2-4) SWTs installed compared to single SWT sites. Support for this prediction would indicate evidence of cumulative effects of SWTs.    
 
-# Methods
+# Materials and methods
 
 ## Sites
 
@@ -209,10 +221,14 @@ This apparently relatively localised effect of SWTs may in turn also explain the
 
 There are a number of important caveats with our findings that should be considered. First of all, these findings and conclusions should not be generalised to species other than *Pipistrellus* sp. Although *Pipistrellus* bats are by far the commonest species in both our wider study area as well as in the specific habitats we studied [@middleton_introduction_2006], it is likely that the collection of sufficient data to draw species-specific conclusions would require targeted surveys. The need to collect data at a wide range of sites rather than in specific habitats (where less widespread species may be more abundant) prevented us from doing this here. However, larger turbines in wind farms are known to have different effects on different species [@cryan_causes_2009] and we therefore consider this to be a research priority for SWTs (Tatchley *et al.* submitted). Secondly, the limited number of sites with more than two turbines in our sample means that we cannot exclude the possibility that a larger number of turbines *would* cause cumulative effects; indeed modelling studies in birds [@schaub_spatial_2012] show that this may well be the case. Finally, the combination of recording bat activity over a relatively large scale (up to 500m from SWTs) along transects, and a distance-based approach to turbine effects, required that we analysed our data in distance bands. Our choice of relatively 'coarse' 100m distance bands may mean that we have missed more subtle cumulative effects of SWTs. However, our previous study had already established adverse effects on activity seem to approach zero over 25 m [@minderman_experimental_2012]. Moreover, accurately allocating bat passes to even more narrow distance bands is likely to introduce false precision. Thus, in our view data on behavioural responses to turbines on a finer scale would require alternative survey methods, e.g. flight path tracking [@holderied_echolocation_2003].
 
-In summary, based on the data presented here it is unlikely that SWTs in the range of 6-25m hub height have adverse effects on bat activity on a landscape (>100 m) scale, or that such effects are cumulative (when considering 2-4 installed turbines). Given the rapid expansion of the SWT sector both in the UK and worldwide, and the fact that in many cases planning- or siting permission is required, these findings are of key importance to both decision makers on the local level as well as to renewable energy policy makers.
+In conclusion, based on the data presented here it is unlikely that SWTs in the range of 6-25m hub height have adverse effects on bat activity on a landscape (>100 m) scale, or that such effects are cumulative (when considering 2-4 installed turbines). The SWT sector is expanding rapidly both in the UK and worldwide, and as a result planners and decision makers are increasingly faced with having to advise or decide on planned developments of multiple SWTs in clusters. To date, there was no data to inform such decisions, and the findings presented here are therefore vital and timely. While we reiterate our suggestion that individual SWTs should be sited away (>25m) from potentially valuable bat habitat [@minderman_experimental_2012], we additionally sugggest that cumulative effects on bats are less likely, at least for the sort of turbine size range considered here.
 
 # Acknowledgements
 
 We are extremely grateful to all site- and turbine owners who kindly allowed us access to their property for the survey work; this study would have been impossible without their help. Kathryn Hamilton made substantial contributions to the data collection in 2013, and Sofia Motta Pralon assisted with GIS data entry - thank you both. Many thanks to Cerian Tatchley, Paul Lintott, Nils Bunnefeld, Chris Pendlebury and Claudia Garratt for useful discussions. This study was funded by a University of Stirling Impact Fellowship to JM.
+
+# Data archiving
+
+Appropriate arrangements will be made upon acceptance of the paper.
 
 # References {-}

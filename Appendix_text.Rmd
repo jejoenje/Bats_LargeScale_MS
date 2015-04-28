@@ -59,10 +59,10 @@ tableCount <- incCount(tableCount, "TAB_all_hab_mod_subset")
           
 ```
 
-# Supplementary material: No evidence for cumulative effects of small wind turbines on bat activity
+# Appendix S1: No evidence for cumulative effects of small wind turbines on bat activity
 *Jeroen Minderman, Mairi H. Gillis, Helen F. Daly & Kirsty J. Park*
 
-## Appendix 1: Preliminary habitat data analysis
+## Appendix S1: Preliminary habitat data analysis
 
 A total of `r n_hab_var` habitat variables were quantified in each transect section in all sites `r pasteLabel('Table S', tableCount, 'TAB_all_hab')` , using 1:1250 UK Ordnance Survey MasterMap Topography digital map (OS) data and QGIS v. 1.8. These variables were chosen on the basis of their known potential effect on bat activity. 
 The five proportion land cover variables (proportion buildings, road or tracks, rough grassland, roadside, and woodland) were calculated from the OS polygon area data and were calculated as the sum of each of these five land cover types in each transect section, divided by the size of the transect section. These were defined as the total area size of all polygons listed as (1) "Buildings" in the *Theme* field; (2) "Road Tracks and Paths"" in the *Theme* field; (3) "Rough grassland" (including all lower classifications) in the *descrTerm* field; (4) "Roadside" in the *descrGroup* field and (5) "Coniferous or Nonconiferous trees"" in the *descrGroup* field.
